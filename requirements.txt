@@ -1,0 +1,10 @@
+APScheduler
+asgiref=
+Django
+django-apscheduler
+pytz
+six
+sqlparse
+tzdata
+tzlocal
+psycopg2
