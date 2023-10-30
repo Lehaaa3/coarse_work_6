@@ -4,7 +4,6 @@ from django.forms import inlineformset_factory
 
 from distribution.forms import MessageForm, MailingSettingsForm
 from distribution.models import Client, MailingSettings, Message
-from distribution.services import send_email
 
 
 class GetContextDataMixin:
@@ -40,7 +39,6 @@ class MailingSettingsListView(ListView):
         clients = set()
         [[clients.add(client.email) for client in mailing.clients.all()] for mailing in mailing_list]
         context_data['clients_count'] = len(clients)
-
         return context_data
 
 
@@ -51,12 +49,6 @@ class MailingSettingsCreateView(GetContextDataMixin, Client, CreateView):
     def form_valid(self, form):
         context_data = self.get_context_data()
         formset = context_data['formset']
-        for f in formset:
-            print(f.__dict__)
-            title = f.__dict__['data']['messages-0-title']
-            text = f.__dict__['data']['messages-0-text']
-            emails = f.__dict__['data']
-            send_email(title, text, emails)
 
         if formset.is_valid():
             formset.instance = self.object
@@ -82,8 +74,6 @@ class MailingSettingsUpdateView(GetContextDataMixin, UpdateView):
     def form_valid(self, form):
         context_data = self.get_context_data()
         formset = context_data['formset']
-        obj = form.save()
-        send_email(obj)
 
         if formset.is_valid():
             formset.instance = self.object

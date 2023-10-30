@@ -20,9 +20,9 @@ class Client(models.Model):
 
 
 class MailingSettings(models.Model):
-    DAILY = timedelta(days=1)
-    WEEKLY = timedelta(days=7)
-    MONTHLY = timedelta(days=30, hours=12)
+    DAILY = "Раз в день"
+    WEEKLY = "Раз в неделю"
+    MONTHLY = "Раз в месяц"
 
     PERIODICITY_CHOICES = [
         (DAILY, "Раз в день"),
@@ -40,9 +40,9 @@ class MailingSettings(models.Model):
         (STARTED, "Запущена"),
     ]
 
-    start_time = models.TimeField(verbose_name='время начала рассылки', default=time(hour=14))
-    end_time = models.TimeField(verbose_name='время окончания рассылки', default=time(hour=15))
-    periodicity = models.DurationField(verbose_name='периодичность', default=DAILY, choices=PERIODICITY_CHOICES)
+    start_time = models.DateTimeField(verbose_name='время начала рассылки')
+    end_time = models.DateTimeField(verbose_name='время окончания рассылки')
+    periodicity = models.CharField(max_length=50, verbose_name='периодичность', choices=PERIODICITY_CHOICES)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=CREATED, verbose_name='статус рассылки')
 
     clients = models.ManyToManyField(Client, verbose_name='клиенты рассылки')
@@ -93,3 +93,4 @@ class Log(models.Model):
     class Meta:
         verbose_name = 'лог'
         verbose_name_plural = 'логи'
+
