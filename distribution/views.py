@@ -2,8 +2,8 @@ from django.urls import reverse
 from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
 from django.forms import inlineformset_factory
 
-from distribution.forms import MessageForm, MailingSettingsForm
-from distribution.models import Client, MailingSettings, Message
+from distribution.forms import MessageForm, MailingSettingsForm, ClientForm
+from distribution.models import Client, MailingSettings, Message, Log
 
 
 class GetContextDataMixin:
@@ -20,6 +20,26 @@ class GetContextDataMixin:
         context_data['formset'] = formset
 
         return context_data
+
+
+class ClientListView(ListView):
+    model = Client
+
+
+class ClientCreateView(CreateView, ClientForm):
+    model = Client
+    form_class = ClientForm
+
+    def get_success_url(self):
+        return reverse('distribution:clients_list')
+
+
+class ClientUpdateView(CreateView, UpdateView):
+    model = Client
+    form_class = ClientForm
+
+    def get_success_url(self):
+        return reverse('distribution:clients_list')
 
 
 class MailingSettingsDetailView(DetailView):
@@ -83,3 +103,7 @@ class MailingSettingsUpdateView(GetContextDataMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('distribution:distribution_detail', args=[self.object.pk])
+
+
+class LogListView(ListView):
+    model = Log

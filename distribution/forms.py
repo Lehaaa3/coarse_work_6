@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from distribution.models import Message, MailingSettings
+from distribution.models import Message, MailingSettings, Client
 
 
 class MailingSettingsForm(ModelForm):
@@ -13,3 +13,9 @@ class MessageForm(ModelForm):
     class Meta:
         model = Message
         fields = ('title', 'text', 'status',)
+
+
+class ClientForm(ModelForm):
+    class Meta:
+        model = Client
+        fields = ('FIO', 'email', 'comment',)
