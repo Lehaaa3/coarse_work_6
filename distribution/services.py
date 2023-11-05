@@ -11,7 +11,7 @@ from distribution.models import Message, MailingSettings, Log, Client
 def send_mailling(mailing):
     now = timezone.localtime(timezone.now())
     if mailing.start_time <= now <= mailing.end_time:
-        for message in mailing.messages.filter(status="К отправке"):
+        for message in mailing.messages.all():
             for client in mailing.clients.all():
                 try:
                     result = send_mail(
@@ -21,8 +21,6 @@ def send_mailling(mailing):
                         recipient_list=[client.email],
                         fail_silently=False
                     )
-                    # message.status = Message.SHIPPED
-                    # message.save()
                     log = Log.objects.create(
                         time=mailing.start_time,
                         status=result,
@@ -42,3 +40,6 @@ def send_mailling(mailing):
                     )
                     log.save()
                 return log
+    else:
+        mailing.status = MailingSettings.COMPLETED
+        mailing.save()

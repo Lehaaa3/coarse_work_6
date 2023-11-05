@@ -56,18 +56,8 @@ class MailingSettings(models.Model):
 
 
 class Message(models.Model):
-    TO_BE_SENT = 'К отправке'
-    SHIPPED = 'Отправлено'
-
-    STATUS_CHOICES = [
-        (TO_BE_SENT, "К отправке"),
-        (SHIPPED, "Отправлено"),
-    ]
-
     title = models.CharField(max_length=100, verbose_name='тема письма')
     text = models.TextField(verbose_name='тело письма')
-    status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=TO_BE_SENT, verbose_name='статус отправки')
-
     mailing_list = models.ForeignKey(MailingSettings, on_delete=models.CASCADE, verbose_name='рассылка',
                                      related_name='messages', **NULLABLE)
 
@@ -93,4 +83,3 @@ class Log(models.Model):
     class Meta:
         verbose_name = 'лог'
         verbose_name_plural = 'логи'
-

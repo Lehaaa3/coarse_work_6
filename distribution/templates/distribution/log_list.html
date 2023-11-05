@@ -4,7 +4,32 @@
     <h1 class="display-1">Журнал рассылок</h1>
 </div>
 
-
+<div class="container col-8 mt-2 mb-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h1>Статистика</h1>
+        </div>
+        <div class="card-body">
+            <div class="row text-center ">
+                <div class="col-12">
+                    <table class="table">
+                        <tr>
+                            <th><h4>Количество отправленных писем</h4></th>
+                            <th><h4>Количество успешно отправленных писем</h4></th>
+                            <th><h4>Количество ошибок</h4></th>
+                        </tr>
+                        <body>
+                        <tr>
+                            <td><h4>{{ all }}</h4></td>
+                            <td><h4>{{ success }}</h4></td>
+                            <td><h4>{{ error }}</h4></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container col-10">
     <div class="card">
         <div class="card-header text-center">

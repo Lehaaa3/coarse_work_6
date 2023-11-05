@@ -19,7 +19,7 @@ class MailingListSettingsAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageListSettingsAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'status', 'mailing_list',)
+    list_display = ('pk', 'title', 'mailing_list',)
     list_filter = ['mailing_list', ]
     search_fields = ['title', 'text', ]
 
